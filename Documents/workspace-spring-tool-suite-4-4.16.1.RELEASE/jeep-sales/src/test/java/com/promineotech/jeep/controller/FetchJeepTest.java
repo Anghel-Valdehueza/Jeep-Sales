@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -63,14 +64,17 @@ class FetchJeepTest {
       return jeeps;
   }
 
-    
+    @Test
     void testThatJeepsAreReturnedWhenAValidModelAndTrimAreSupplied() {
+        //Given: valid model, trim and URI
         JeepModel model = JeepModel.WRANGLER;
         String trim = "Sport";
         String uri = String.format("http://localhost:%d/jeeps?model=%s&trim=%s", serverPort, model, trim);
         
+        //When: a connection is made to the URI
         ResponseEntity<List<Jeep>> response = restTemplate.exchange(uri, HttpMethod.GET, null, new ParameterizedTypeReference<>() {});
         
+        //Then: a success (OK - 200) status code is returned
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         List<Jeep> expected = buildExpected(model, trim);
         assertThat(response.getBody()).isEqualTo(expected);
