@@ -6,6 +6,7 @@ package com.promineotech.jeep.controller;
 import static org.assertj.core.api.Assertions.assertThat;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,7 @@ class FetchJeepTest {
               .basePrice(BigDecimal.valueOf(31975))
               .build());
 
+      Collections.sort(jeeps);
       return jeeps;
   }
 
@@ -76,8 +78,10 @@ class FetchJeepTest {
         
         //Then: a success (OK - 200) status code is returned
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        List<Jeep> actual = response.getBody();
         List<Jeep> expected = buildExpected(model, trim);
-        assertThat(response.getBody()).isEqualTo(expected);
+        
+        assertThat(actual).isEqualTo(expected);
 
     }
 
