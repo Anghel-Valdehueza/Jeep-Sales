@@ -45,22 +45,22 @@ class FetchJeepTest {
     List<Jeep> buildExpected(JeepModel model, String trim) {
       List<Jeep> jeeps = new ArrayList<>();
       jeeps.add(Jeep.builder()
-                      .modelPK(1L)
+                      
                       .modelId(JeepModel.WRANGLER)
                       .trimLevel("Sport")
                       .numDoors(2)
                       .wheelSize(17)
-                      .basePrice(BigDecimal.valueOf(28475))
-              .build());
+                      .basePrice(new BigDecimal("28475.00"))
+                      .build());
 
       jeeps.add(Jeep.builder()
-                      .modelPK(2L)
-              .modelId(JeepModel.WRANGLER)
-              .trimLevel("Sport")
-              .numDoors(4)
-              .wheelSize(17)
-              .basePrice(BigDecimal.valueOf(31975))
-              .build());
+                      
+                      .modelId(JeepModel.WRANGLER)
+                      .trimLevel("Sport")
+                      .numDoors(4)
+                      .wheelSize(17)
+                      .basePrice(new BigDecimal("31975.00"))
+                      .build());
 
       Collections.sort(jeeps);
       return jeeps;
@@ -82,6 +82,7 @@ class FetchJeepTest {
         List<Jeep> expected = buildExpected(model, trim);
         
         assertThat(actual).isEqualTo(expected);
+
 
     }
 
