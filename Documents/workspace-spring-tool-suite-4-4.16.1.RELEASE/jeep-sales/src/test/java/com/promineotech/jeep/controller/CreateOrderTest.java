@@ -42,11 +42,14 @@ public class CreateOrderTest {
   public void testCreateOrderReturnsSuccess201() {
     String body = createOrderBody();
     String uri = String.format("http://localhost:%d/orders", serverPort);
+    
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
     HttpEntity<String> bodyEntity = new HttpEntity<>(body, headers);
+    
     ResponseEntity<Order> response = restTemplate.exchange(uri,
         HttpMethod.POST, bodyEntity, Order.class);
+    
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
     assertThat(response.getBody()).isNotNull();
 
